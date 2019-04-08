@@ -70,6 +70,31 @@ describe('enhancer.js', () => {
         });
       });
     });
-    // describe('enhancer.get()', () => {});
+
+    describe('enhancer.get()', () => {
+      it('returns a new item with the name property modified where if the enhancement = 0, do nothing', () => {
+        expect(get({ name: 'a', durability: 100, enhancement: 0 })).toEqual({
+          name: 'a',
+          durability: 100,
+          enhancement: 0
+        });
+      });
+      it('if the enhancement > 0, change name to [+<enhancement level>]', () => {
+        expect(
+          get({ name: 'Iron Sword', durability: 100, enhancement: 10 })
+        ).toEqual({
+          name: '[+10] Iron Sword',
+          durability: 100,
+          enhancement: 10
+        });
+        expect(
+          get({ name: 'Iron Sword', durability: 100, enhancement: 1 })
+        ).toEqual({
+          name: '[+1] Iron Sword',
+          durability: 100,
+          enhancement: 1
+        });
+      });
+    });
   });
 });

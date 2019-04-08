@@ -3,7 +3,7 @@ const { succeed, fail, repair, get } = require('./enhancer.js');
 describe('enhancer.js', () => {
   describe('enhancer', () => {
     describe('enhancer.succeed()', () => {
-      it('accepts an item object and returns a new item object where the items enhancement increases by 1 if !20 ', () => {
+      it('should accept an item object and return a new item object where the items enhancement increases by 1 if !20 ', () => {
         expect(succeed({ name: 'a', durability: 10, enhancement: 10 })).toEqual(
           {
             name: 'a',
@@ -25,7 +25,32 @@ describe('enhancer.js', () => {
         });
       });
     });
-    // describe('enhancer.fail()', () => {});
+
+    describe('enhancer.fail()', () => {
+      it('should accept an item object and return a new item object where if the enhancment < 15, durability - 5.', () => {
+        expect(fail({ name: 'a', durability: 10, enhancement: 10 })).toEqual({
+          name: 'a',
+          durability: 5,
+          enhancement: 10
+        });
+      });
+      it('should accept an item object and return a new item object where if the enhancement > 15, durability - 10.', () => {
+        expect(fail({ name: 'a', durability: 20, enhancement: 16 })).toEqual({
+          name: 'a',
+          durability: 10,
+          enhancement: 16
+        });
+      });
+
+      it('should accept an item object and return a new item object where if enhancement > 16, durability - 10, enhancement - 1', () => {
+        expect(fail({ name: 'a', durability: 25, enhancement: 18 })).toEqual({
+          name: 'a',
+          durability: 15,
+          enhancement: 17
+        });
+      });
+    });
+
     describe('enhancer.repair()', () => {
       it('should accept an item object and return a new item with the durability restored to 100.', () => {
         expect(repair({ name: 'a', durability: 10, enhancement: 10 })).toEqual({
